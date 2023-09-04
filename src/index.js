@@ -1,17 +1,55 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM  from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {books} from './books';
+import Book from './Book';
+
+const image='./book-1.jpg';
+
+
+const BookList = () =>{
+
+const getBook =(id)=>{
+    const book = books.find((book)=> book.id === id);
+    console.log(book);
+}
+    return (
+            <>
+            <h1>Amazon Best Sellers</h1>
+            <section className='book-list'>
+            <EventExamples/>
+            {books.map((book,index)=>{
+                
+                return (
+                    <Book {...book} key={book.id} getBook={getBook} number={index}/>
+                );
+            })}</section></>);
+}
+
+const EventExamples = () =>{
+    const handleInputChange= (e) =>{
+        console.log(e.target.value);
+        console.log(e.target.type);
+    }
+    const handleBtnClick= () =>{
+        console.log('btn');
+    }
+    const handleFormSubmission= (e) =>{
+        e.preventDefault();
+        console.log('Form Submitted');
+    }
+    
+    return (
+            <form onSubmit={handleFormSubmission}>
+                <input type='text' onChange={handleInputChange} style={{margin: '1rem 0'}}></input>
+                <button onClick={handleBtnClick}>click</button>
+            </form>
+            
+            );
+}
+
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+root.render(<BookList/>);
